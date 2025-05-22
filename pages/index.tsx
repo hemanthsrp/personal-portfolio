@@ -1,3 +1,11 @@
+/**
+ * Portfolio Home Page (index.tsx)
+ *
+ * This file defines the main landing page of the personal portfolio website.
+ * It features a hero section, about, projects, work experience, leadership, skills,
+ * and contact sections, with smooth navigation and interactive modals for experience and leadership details.
+ * The page leverages reusable UI components and Framer Motion for animations.
+ */
 
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
@@ -10,12 +18,12 @@ import { BsLink45Deg } from "react-icons/bs";
 // Reusable UI Components
 // ===========================
 
-// Card: Generic container for project/experience/leadership content.
+// Card: Generic container for project, experience, or leadership content.
 const Card = ({ children }: { children: React.ReactNode }) => (
   <div className="bg-[#1a1a1a] rounded-2xl p-4 shadow-lg">{children}</div>
 );
 
-// Button: Consistent styled button for actions/links.
+// Button: Consistently styled button for actions/links.
 const Button = ({ children }: { children: React.ReactNode }) => (
   <button className="bg-white text-black px-4 py-2 rounded-2xl hover:bg-gray-200 transition">
     {children}
@@ -49,17 +57,22 @@ const SkillBadge = ({ name, src }: { name: string; src: string }) => (
 );
 
 // Navbar: Fixed navigation bar for section links and highlighting.
+// Dynamically renders navigation items and highlights the active section.
 const Navbar = ({ activeSection }: { activeSection: string }) => (
   <nav className="fixed top-[0.15rem] left-1/2 -translate-x-1/2 py-0.6 px-6 sm:top-[1.7rem] sm:[initial] z-50 rounded-full bg-white/10 shadow-lg backdrop-blur-md border border-white/20">
     <ul className="flex w-[24rem] flex-wrap items-center justify-center gap-y-2 text-[0.9rem] font-medium sm:w-[initial] sm:flex-nowrap sm:gap-5 transition-colors">
       {['home', 'about', 'projects', 'work', 'leadership', 'skills', 'contact'].map((item, idx) => (
+        // Render each navbar item as a list item. Apply highlight if active.
         <li key={idx} className="h-3/4 flex items-center justify-center relative text-black dark:text-white">
           <a
             href={`#${item}`}
+            // Highlight the active section with a different text color and background.
             className={`flex w-full items-center justify-center px-3 py-3 uppercase transition ${activeSection === item ? 'text-white' : ''}`}
           >
+            {/* Show 'Experience' for 'work' section, otherwise capitalize first letter */}
             {item === 'work' ? 'Experience' : item.charAt(0).toUpperCase() + item.slice(1)}
             {activeSection === item && (
+              // Animated highlight background for active section
               <motion.span
                 layoutId="navbar-highlight"
                 className="rounded-full absolute inset-x-0 top-1.5 bottom-1.5 -z-10 bg-blue-400"
@@ -75,9 +88,14 @@ const Navbar = ({ activeSection }: { activeSection: string }) => (
 
 
 // ===========================
-// Main Portfolio Export
+// Main Portfolio Component
 // ===========================
 
+/**
+ * Portfolio: Main page component for the portfolio.
+ * Handles section navigation, state for modals, project filtering,
+ * and renders all major sections and UI components.
+ */
 export default function Portfolio() {
   // The font-sans utility is applied globally here, and Sora is set as primary sans in Tailwind config.
   const [activeSection, setActiveSection] = useState("");
@@ -95,6 +113,8 @@ export default function Portfolio() {
   // ===========================
   // Section Intersection Observer
   // ===========================
+  // Sets the active section in the navbar as the user scrolls.
+  // Uses IntersectionObserver to detect which section is in view.
   useEffect(() => {
     const sections = document.querySelectorAll("section[id]");
     const observer = new window.IntersectionObserver(
@@ -120,6 +140,7 @@ export default function Portfolio() {
   // ===========================
   // Modal Close on Escape
   // ===========================
+  // Closes the experience/leadership modal when Escape key is pressed.
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
       if (e.key === "Escape") setSelectedActivity(null);
@@ -136,10 +157,7 @@ export default function Portfolio() {
       ============================ */}
       <Navbar activeSection={activeSection} />
 
-
-      {/* ===========================
-          Hero Section
-      ============================ */}
+      {/* Hero Section: Introduction and links */}
       <section id="home" className="min-h-screen flex flex-col md:flex-row justify-end items-center px-20 pt-32 gap-20 max-w-[90rem] mx-auto text-left">
         {/* Left Text Block */}
         <div className="flex-1 max-w-2xl text-left">
@@ -175,10 +193,7 @@ export default function Portfolio() {
         </div>
       </section>
 
-
-      {/* ===========================
-          About Section
-      ============================ */}
+      {/* About Section: Personal background and education/certifications */}
       <section id="about" className="min-h-screen flex flex-col items-center justify-center py-20 px-6 w-full max-w-[1500px] mx-auto text-center">
         <h2 className="text-4xl font-semibold mb-6">About Me</h2>
         <p className="text-lg leading-8 text-gray-300 max-w-3xl text-left space-y-6">
@@ -220,10 +235,7 @@ export default function Portfolio() {
         </div>
       </section>
 
-
-      {/* ===========================
-          Projects Section
-      ============================ */}
+      {/* Projects Section: Portfolio of selected projects */}
       <section id="projects" className="min-h-screen py-40 px-6 max-w-7xl mx-auto text-white">
         <h2 className="text-4xl font-semibold mb-6 text-center">Projects</h2>
         <div className="flex justify-center mb-8 gap-3 flex-wrap">
@@ -241,46 +253,47 @@ export default function Portfolio() {
             </button>
           ))}
         </div>
+        {/* Filter and render projects based on selected technology filter */}
         {(() => {
+          // List of all projects
           const allProjects = [
             {
               title: "Portfolio Website",
               description: "A responsive portfolio website built with React and Tailwind CSS",
               tags: ["React", "Tailwind CSS", "Framer Motion"],
-              image: "/project-images/portfolio.png",
-              link: "#"
+              image: "/portfolio.png",
+              link: "https://github.com/hemanthsrp/personal-portfolio"
             },
             {
-              title: "Robotics Simulation",
-              description: "Simulation platform using Unreal Engine and YOLO vision integration",
-              tags: ["Python", "OpenCV", "YOLO"],
-              image: "/project-images/robotics.png",
-              link: "#"
+              title: "Air Movies",
+              description: "A web application that allows users to search through airline movie entertainment catalogs",
+              tags: ["Python", "React", "Tailwind CSS", "MySQL"],
+              image: "airmovies.png",
+              link: "https://github.com/hemanthsrp/airmovies"
             },
             {
-              title: "Task Manager App",
-              description: "A productivity app for managing tasks and goals",
-              tags: ["React", "Firebase", "Redux", "Material UI"],
-              image: "/project-images/taskapp.png",
-              link: "#"
+              title: "InchWorm",
+              description: "A movement system developed by Team 14523 during 2022-2023 FTC POWERPLAY season",
+              tags: ["Java", "OpenCV"],
+              image: "inchworm.png",
+              link: "https://github.com/hemanthsrp/InchWorm"
             },
-            // Example Java project
             {
-              title: "Student Management System",
-              description: "A desktop application for managing student records, built in Java.",
+              title: "FTCScouter",
+              description: "A FTC Scouting application for tracking and analyzing competition data",
+              tags: ["Python"],
+              image: "ftcscouter.png",
+              link: "https://github.com/hemanthsrp/FTC-Scouter"
+            },
+            {
+              title: "Nutrition Tracker",
+              description: "An application for tracking and managing nutrition records and recipes, built in Java",
               tags: ["Java"],
-              image: "/project-images/student-management.png",
+              image: "nutritiontracker.png",
               link: "#"
-            },
-            // Example Node.js project
-            {
-              title: "API Server",
-              description: "A RESTful API server using Node.js and Express.",
-              tags: ["Node.js"],
-              image: "/project-images/api-server.png",
-              link: "#"
-            },
+            }
           ];
+          // Filter projects by selected technology or show all if 'All' is selected
           const filteredProjects = selectedFilter === "All"
             ? allProjects
             : allProjects.filter(project => project.tags.includes(selectedFilter));
@@ -294,7 +307,7 @@ export default function Portfolio() {
                   className="bg-[#1e1e1e] rounded-xl overflow-hidden shadow-lg cursor-pointer"
                 >
                   <div className="w-full h-48 relative overflow-hidden">
-                    <img src={project.image} alt={project.title} className="w-full h-full object-cover" />
+                    <img src={project.image} alt={project.title} className="w-full h-full object-contain" />
                   </div>
                   <div className="p-6 text-left">
                     <h3 className="text-lg font-semibold text-white mb-1">{project.title}</h3>
@@ -317,10 +330,7 @@ export default function Portfolio() {
         })()}
       </section>
 
-
-      {/* ===========================
-          Experience Section
-      ============================ */}
+      {/* Experience Section: Work experience timeline with modal details */}
       <section id="work" className="pt-40 pb-20 px-6 bg-[#111] text-white max-w-6xl w-full mx-auto">
         <h2 className="text-4xl font-semibold text-center mb-2">Work Experience</h2>
         <p className="text-center text-gray-400 mb-12">My professional journey in the world of web development</p>
@@ -360,7 +370,7 @@ export default function Portfolio() {
                 'Assisted in due diligence for real estate investments.',
                 'Worked remotely with cross-functional teams.'
               ],
-              link: 'https://www.dcpartners.capital/com/',
+              link: 'https://www.dcpartners.capital/',
               icon: <FaBriefcase className="text-blue-400 text-2xl" />,
             },
             {
@@ -406,6 +416,10 @@ export default function Portfolio() {
             </div>
           ))}
           <AnimatePresence>
+            {/* Experience/Leadership Modal Logic:
+                When an experience or leadership card is clicked, selectedActivity is set.
+                The modal shows detailed information and can be closed by clicking outside or pressing Escape.
+            */}
             {selectedActivity && (
               <>
                 {/* Modal Backdrop */}
@@ -480,10 +494,7 @@ export default function Portfolio() {
         </div>
       </section>
 
-
-      {/* ===========================
-          Leadership Section
-      ============================ */}
+      {/* Leadership Section: Student organizations and roles with modal details */}
       <LayoutGroup>
         <section id="leadership" className="py-40 px-6 flex flex-col items-center justify-center bg-[#111] text-white">
           <h2 className="text-4xl font-semibold mb-12 text-center">Leadership</h2>
@@ -496,9 +507,9 @@ export default function Portfolio() {
                 period: 'Apr 2024 – Present',
                 image: '/isustugov.png',
                 bullets: [
-                  'Represents 8,000+ residents in student government senate.',
-                  'Liaises between IRHA and administration for residence life.',
-                  'Oversees allocation of $2.6M in student activity fees.'
+                  'Represents 8,000+ residents in the student government senate.',
+                  'Liaises between the Inter Residence Hall Association and administration for residence life.',
+                  'Oversees allocation of $2.6M in student activity fees to student organizations across campus.'
                 ],
                 link: 'https://www.stugov.iastate.edu/'
               },
@@ -517,11 +528,12 @@ export default function Portfolio() {
               {
                 title: 'VP of Finance',
                 org: 'Engineering Student Council',
-                period: 'March 2025 – Present',
+                period: 'Mar 2025 – Present',
                 image: '/esclogo.png',
                 bullets: [
-                  'Develop and maintain software for vehicle performance and data analysis.',
-                  'Collaborate with mechanical and electrical teams on autonomous systems.'
+                  'Develop and maintain budget for Engineering Student Council.',
+                  'Oversee the allocation of ESC funds to student organizations.',
+                  'Prepare weekly reports on financial status and expenditures.'
                 ],
                 link: 'https://www.engineering.iastate.edu/esc/'
               },
@@ -531,10 +543,11 @@ export default function Portfolio() {
                 period: 'Aug 2023 – Present',
                 image: '/frileyhall.png',
                 bullets: [
+                  'Organize and chair weekly meetings for the Friley Hall Senate.',
                   'Oversee communications and meetings for the largest residence hall on campus.',
                   'Liaise with hall government and student affairs to enhance residential life.'
                 ],
-                link: 'https://www.housing.iastate.edu/friley'
+                link: 'https://www.stuorg.iastate.edu/friley-senate'
               }
             ].map((act, idx) => (
               <motion.div
@@ -558,6 +571,7 @@ export default function Portfolio() {
           </div>
         </section>
         <AnimatePresence>
+          {/* Modal logic is shared with experience section */}
           {selectedActivity && (
             <>
               {/* Modal Backdrop */}
@@ -625,10 +639,7 @@ export default function Portfolio() {
         </AnimatePresence>
       </LayoutGroup>
 
-
-      {/* ===========================
-          Skills Section
-      ============================ */}
+      {/* Skills Section: Technical skills grouped by category */}
       <section id="skills" className="py-32 px-4 max-w-7xl mx-auto text-center text-white">
         <h2 className="text-4xl font-semibold mb-4">My Skills</h2>
         <p className="text-gray-400 mb-12"></p>
@@ -694,10 +705,7 @@ export default function Portfolio() {
         </div>
       </section>
 
-
-      {/* ===========================
-          Contact Section
-      ============================ */}
+      {/* Contact Section: Email and contact form */}
       <section id="contact" className="py-32 px-4 max-w-xl mx-auto text-center">
         <h2 className="text-3xl md:text-4xl font-bold mb-6">SEND ME A MESSAGE!</h2>
         <p className="text-gray-400 mb-8">
