@@ -8,6 +8,7 @@
  */
 
 import React, { useEffect, useState } from "react";
+import Image from "next/image";
 import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
 import { FaGithub, FaLinkedin, FaGraduationCap, FaCertificate, FaBriefcase } from "react-icons/fa";
 import { HiOutlineMail } from "react-icons/hi";
@@ -18,17 +19,15 @@ import { BsLink45Deg } from "react-icons/bs";
 // Reusable UI Components
 // ===========================
 
-// Card: Generic container for project, experience, or leadership content.
-const Card = ({ children }: { children: React.ReactNode }) => (
-  <div className="bg-[#1a1a1a] rounded-2xl p-4 shadow-lg">{children}</div>
-);
+// const Card = ({ children }: { children: React.ReactNode }) => (
+//   <div className="bg-[#1a1a1a] rounded-2xl p-4 shadow-lg">{children}</div>
+// );
 
-// Button: Consistently styled button for actions/links.
-const Button = ({ children }: { children: React.ReactNode }) => (
-  <button className="bg-white text-black px-4 py-2 rounded-2xl hover:bg-gray-200 transition">
-    {children}
-  </button>
-);
+// const Button = ({ children }: { children: React.ReactNode }) => (
+//   <button className="bg-white text-black px-4 py-2 rounded-2xl hover:bg-gray-200 transition">
+//     {children}
+//   </button>
+// );
 
 // SkillBadge: Animated badge for displaying a skill logo and name.
 const SkillBadge = ({ name, src }: { name: string; src: string }) => (
@@ -45,7 +44,7 @@ const SkillBadge = ({ name, src }: { name: string; src: string }) => (
     }}
     className="group flex items-center gap-2 px-4 py-2 bg-[#2c2c2c] text-white rounded-xl shadow border border-gray-700 transform transition-all duration-300 ease-out"
   >
-    <img
+    <Image
       src={src}
       alt={name}
       width={20}
@@ -184,10 +183,12 @@ export default function Portfolio() {
         {/* Right Image Block */}
         <div className="flex-1 flex justify-center items-center">
           <div className="w-[400px] h-[400px] rounded-full shadow-inner overflow-hidden">
-            <img
+            <Image
               src="/profile.jpg"
               alt="Hemanth's portrait"
-              className="w-full h-full object-cover rounded-full"
+              width={400}
+              height={400}
+              className="object-cover rounded-full w-full h-full"
             />
           </div>
         </div>
@@ -268,28 +269,28 @@ export default function Portfolio() {
               title: "Air Movies",
               description: "A web application that allows users to search through airline movie entertainment catalogs",
               tags: ["Python", "React", "Tailwind CSS", "MySQL"],
-              image: "airmovies.png",
+              image: "/airmovies.png",
               link: "https://github.com/hemanthsrp/airmovies"
             },
             {
               title: "InchWorm",
               description: "A movement system developed by Team 14523 during 2022-2023 FTC POWERPLAY season",
               tags: ["Java", "OpenCV"],
-              image: "inchworm.png",
+              image: "/inchworm.png",
               link: "https://github.com/hemanthsrp/InchWorm"
             },
             {
               title: "FTCScouter",
               description: "A FTC Scouting application for tracking and analyzing competition data",
               tags: ["Python"],
-              image: "ftcscouter.png",
+              image: "/ftcscouter.png",
               link: "https://github.com/hemanthsrp/FTC-Scouter"
             },
             {
               title: "Nutrition Tracker",
               description: "An application for tracking and managing nutrition records and recipes, built in Java",
               tags: ["Java"],
-              image: "nutritiontracker.png",
+              image: "/nutritiontracker.png",
               link: "#"
             }
           ];
@@ -307,7 +308,13 @@ export default function Portfolio() {
                   className="bg-[#1e1e1e] rounded-xl overflow-hidden shadow-lg cursor-pointer"
                 >
                   <div className="w-full h-48 relative overflow-hidden">
-                    <img src={project.image} alt={project.title} className="w-full h-full object-contain" />
+                    <Image
+                      src={project.image}
+                      alt={project.title}
+                      width={400}
+                      height={192}
+                      className="object-contain w-full h-full"
+                    />
                   </div>
                   <div className="p-6 text-left">
                     <h3 className="text-lg font-semibold text-white mb-1">{project.title}</h3>
@@ -449,9 +456,10 @@ export default function Portfolio() {
                   >
                     {selectedActivity.image && (
                       <div className="relative h-60 w-full mb-4 overflow-hidden rounded-lg">
-                        <img
+                        <Image
                           src={selectedActivity.image}
                           alt={selectedActivity.title}
+                          fill
                           className="absolute inset-0 w-full h-full object-contain object-center"
                         />
                       </div>
@@ -558,9 +566,10 @@ export default function Portfolio() {
                 transition={{ type: "spring", stiffness: 300, damping: 20 }}
               >
                 <div className="h-60 w-full rounded-lg mb-4 overflow-hidden relative">
-                  <img
+                  <Image
                     src={act.image}
                     alt={act.title}
+                    fill
                     className="absolute inset-0 w-full h-full object-contain object-center"
                   />
                 </div>
@@ -600,9 +609,10 @@ export default function Portfolio() {
                   onClick={(e) => e.stopPropagation()}
                 >
                   <div className="relative h-60 w-full mb-4 overflow-hidden rounded-lg">
-                    <img
+                    <Image
                       src={selectedActivity.image}
                       alt={selectedActivity.title}
+                      fill
                       className="absolute inset-0 w-full h-full object-contain object-center"
                     />
                   </div>
@@ -647,7 +657,13 @@ export default function Portfolio() {
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Frontend */}
           <div className="bg-[#1e1e1e] rounded-xl p-6 shadow-md text-left">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="Frontend" className="h-10 mb-4" />
+            <Image
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg"
+              alt="Frontend"
+              width={40}
+              height={40}
+              className="h-10 mb-4"
+            />
             <h3 className="text-lg font-bold mb-2">Frontend Development</h3>
             <p className="text-sm text-gray-400 mb-4">Building responsive and interactive user interfaces</p>
             <div className="flex flex-wrap gap-2">
@@ -662,7 +678,13 @@ export default function Portfolio() {
 
           {/* Backend */}
           <div className="bg-[#1e1e1e] rounded-xl p-6 shadow-md text-left">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Backend" className="h-10 mb-4" />
+            <Image
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg"
+              alt="Backend"
+              width={40}
+              height={40}
+              className="h-10 mb-4"
+            />
             <h3 className="text-lg font-bold mb-2">Backend Development</h3>
             <p className="text-sm text-gray-400 mb-4">Creating robust and scalable server-side applications</p>
             <div className="flex flex-wrap gap-2">
@@ -677,7 +699,13 @@ export default function Portfolio() {
 
           {/* Database */}
           <div className="bg-[#1e1e1e] rounded-xl p-6 shadow-md text-left">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" alt="Database" className="h-10 mb-4" />
+            <Image
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg"
+              alt="Database"
+              width={40}
+              height={40}
+              className="h-10 mb-4"
+            />
             <h3 className="text-lg font-bold mb-2">Database Management</h3>
             <p className="text-sm text-gray-400 mb-4">Designing and optimizing database structures</p>
             <div className="flex flex-wrap gap-2">
@@ -689,7 +717,13 @@ export default function Portfolio() {
 
           {/* Tools */}
           <div className="bg-[#1e1e1e] rounded-xl p-6 shadow-md text-left">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Tools" className="h-10 mb-4" />
+            <Image
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg"
+              alt="Tools"
+              width={40}
+              height={40}
+              className="h-10 mb-4"
+            />
             <h3 className="text-lg font-bold mb-2">Tools & DevOps</h3>
             <p className="text-sm text-gray-400 mb-4">Boosting workflow and collaboration</p>
             <div className="flex flex-wrap gap-2">

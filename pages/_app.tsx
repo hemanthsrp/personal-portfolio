@@ -11,7 +11,11 @@ export default function App({ Component, pageProps }: AppProps) {
           rel="stylesheet"
         />
       </Head>
-      <Component {...pageProps} />
+      <div className="App">
+        <header className="App-header">
+        </header>
+        <Component {...pageProps} />
+      </div>
     </>
   );
 }
