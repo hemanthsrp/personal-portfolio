@@ -159,8 +159,8 @@ export default function Portfolio() {
       {/* =========================== */}
       <Navbar activeSection={activeSection} />
 
-=      {/* Hero Section: Introduction and links */}
-=      <section
+      {/* Hero Section: Introduction and links */}
+      <section
         id="home"
         className="min-h-screen flex flex-col-reverse sm:flex-row items-center justify-between px-6 pt-32 gap-10 sm:gap-20 max-w-[90rem] mx-auto text-left"
       >
@@ -199,8 +199,10 @@ export default function Portfolio() {
         </div>
       </section>
 
-=      {/* About Section: Personal background and education/certifications */}
-=      <section id="about" className="min-h-screen flex flex-col items-center justify-center py-16 px-4 sm:px-6 w-full max-w-[1500px] mx-auto text-center">
+      {/* About Section */}
+      {/* About Section: Personal background and education/certifications */}
+      {/* About Section */}
+      <section id="about" className="min-h-screen flex flex-col items-center justify-center py-16 px-4 sm:px-6 w-full max-w-[1500px] mx-auto text-center">
         <h2 className="text-3xl sm:text-4xl font-semibold mb-6">About Me</h2>
         <p className="text-lg leading-8 text-gray-300 max-w-3xl text-left space-y-6">
           I&apos;m Hemanth, a Software Developer studying Software Engineering at Iowa State University. My specializations lie within AI/ML and Full Stack Development, with expertise in Java, Python, TypeScript, React, AI integrations like PyTorch, TensorFlow, and OpenAI, and cloud platforms such as AWS and Azure.
@@ -507,8 +509,8 @@ export default function Portfolio() {
         </div>
       </section>
 
-=      {/* Leadership Section: Student organizations and roles with modal details */}
-=      <LayoutGroup>
+      {/* Leadership Section: Student organizations and roles with modal details */}
+      <LayoutGroup>
         <section id="leadership" className="py-40 px-6 flex flex-col items-center justify-center bg-[#111] text-white">
           <h2 className="text-3xl sm:text-4xl font-semibold mb-12 text-center">Leadership</h2>
           {/* Leadership Cards */}
@@ -750,6 +752,8 @@ export default function Portfolio() {
         &copy; 2024 Hemanth. All rights reserved.<br />
         <span className="text-gray-600 italic">I know it is sad to reach the end of something so awesome :)</span>
       </footer>
+      {/* Spacer under footer */}
+      <div className="h-10 sm:h-15" />
     </div>
   );
 }
@@ -778,14 +782,14 @@ function ContactSection() {
 
   return (
     <section id="contact" className="py-16 px-4 bg-[#111] text-white">
-      <div className="max-w-2xl mx-auto">
+      <div className="max-w-3xl mx-auto">
         <h2 className="text-4xl font-bold mb-4 text-center">SEND ME A MESSAGE!</h2>
         <p className="text-center text-gray-400 mb-8">
           Please contact me directly at <a href="mailto:hpeddasani7@gmail.com" className="text-blue-400 underline">hpeddasani7@gmail.com</a> or through this form.
         </p>
         <form
           onSubmit={handleSubmit}
-          className="mt-8 max-w-md mx-auto space-y-6 bg-[#1a1a1a] p-6 rounded-2xl"
+          className="max-w-lg mx-auto space-y-4"
         >
           <input
             type="email"
@@ -793,18 +797,19 @@ function ContactSection() {
             placeholder="Your Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full bg-[#1a1a1a] border border-gray-600 rounded-xl p-4 placeholder-gray-500 focus:outline-none focus:border-blue-400"
+            className="w-full px-4 py-3 rounded-md bg-[#1e1e1e] text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
           />
           <textarea
             required
+            rows={8}
             placeholder="Your Message"
             value={message}
             onChange={(e) => setMessage(e.target.value)}
-            className="w-full bg-[#1a1a1a] border border-gray-600 rounded-xl p-4 placeholder-gray-500 focus:outline-none focus:border-blue-400 h-32 resize-none"
+            className="w-full px-4 py-3 rounded-md bg-[#1e1e1e] text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400 transition resize-none h-40"
           />
           <button
             type="submit"
-            className="mt-6 w-full py-3 bg-white text-black font-semibold rounded-full hover:bg-gray-200 transition"
+            className="px-6 py-2 bg-white text-black font-medium rounded-full hover:bg-gray-200 transition"
           >
             Send Message
           </button>
