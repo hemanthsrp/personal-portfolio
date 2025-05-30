@@ -62,7 +62,7 @@ const SkillBadge = ({ name, src }: { name: string; src: string }) => (
 const Navbar = ({ activeSection }: { activeSection: string }) => (
   <nav className="fixed top-[0.15rem] left-1/2 -translate-x-1/2 py-0.6 px-6 sm:top-[1.7rem] sm:[initial] z-50 rounded-full bg-white/10 shadow-lg backdrop-blur-md border border-white/20">
     <div className="sm:block overflow-x-auto whitespace-nowrap snap-x snap-mandatory">
-      <ul className="inline-flex sm:flex w-[24rem] flex-wrap items-center justify-center gap-y-2 text-[0.9rem] font-medium sm:w-[initial] sm:flex-nowrap sm:gap-5 transition-colors">
+      <ul className="inline-flex sm:flex w-[21rem] flex-wrap items-center justify-center gap-y-0 text-[0.8rem] font-medium sm:w-[initial] sm:flex-nowrap sm:gap-5 transition-colors">
         {['home', 'about', 'projects', 'work', 'leadership', 'skills', 'contact'].map((item, idx) => (
           // Render each navbar item as a list item. Apply highlight if active.
           <li key={idx} className="snap-center h-3/4 flex items-center justify-center relative text-black dark:text-white">
@@ -187,7 +187,7 @@ export default function Portfolio() {
         </div>
         {/* Right Image Block */}
         <div className="flex-1 w-full sm:w-1/2 flex justify-center items-center">
-          <div className="w-48 h-48 sm:w-[400px] sm:h-[400px] rounded-full shadow-inner overflow-hidden">
+          <div className="w-64 h-64 sm:w-[400px] sm:h-[400px] rounded-full shadow-inner overflow-hidden">
             <Image
               src="/profile.jpg"
               alt="Hemanth's portrait"
