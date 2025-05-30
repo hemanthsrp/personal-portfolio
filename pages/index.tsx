@@ -59,29 +59,31 @@ const SkillBadge = ({ name, src }: { name: string; src: string }) => (
 // Dynamically renders navigation items and highlights the active section.
 const Navbar = ({ activeSection }: { activeSection: string }) => (
   <nav className="fixed top-[0.15rem] left-1/2 -translate-x-1/2 py-0.6 px-6 sm:top-[1.7rem] sm:[initial] z-50 rounded-full bg-white/10 shadow-lg backdrop-blur-md border border-white/20">
-    <ul className="flex w-[24rem] flex-wrap items-center justify-center gap-y-2 text-[0.9rem] font-medium sm:w-[initial] sm:flex-nowrap sm:gap-5 transition-colors">
-      {['home', 'about', 'projects', 'work', 'leadership', 'skills', 'contact'].map((item, idx) => (
-        // Render each navbar item as a list item. Apply highlight if active.
-        <li key={idx} className="h-3/4 flex items-center justify-center relative text-black dark:text-white">
-          <a
-            href={`#${item}`}
-            // Highlight the active section with a different text color and background.
-            className={`flex w-full items-center justify-center px-3 py-3 uppercase transition ${activeSection === item ? 'text-white' : ''}`}
-          >
-            {/* Show 'Experience' for 'work' section, otherwise capitalize first letter */}
-            {item === 'work' ? 'Experience' : item.charAt(0).toUpperCase() + item.slice(1)}
-            {activeSection === item && (
-              // Animated highlight background for active section
-              <motion.span
-                layoutId="navbar-highlight"
-                className="rounded-full absolute inset-x-0 top-1.5 bottom-1.5 -z-10 bg-blue-400"
-                transition={{ type: "spring", stiffness: 500, damping: 30 }}
-              />
-            )}
-          </a>
-        </li>
-      ))}
-    </ul>
+    <div className="sm:block overflow-x-auto whitespace-nowrap snap-x snap-mandatory">
+      <ul className="inline-flex sm:flex w-[24rem] flex-wrap items-center justify-center gap-y-2 text-[0.9rem] font-medium sm:w-[initial] sm:flex-nowrap sm:gap-5 transition-colors">
+        {['home', 'about', 'projects', 'work', 'leadership', 'skills', 'contact'].map((item, idx) => (
+          // Render each navbar item as a list item. Apply highlight if active.
+          <li key={idx} className="snap-center h-3/4 flex items-center justify-center relative text-black dark:text-white">
+            <a
+              href={`#${item}`}
+              // Highlight the active section with a different text color and background.
+              className={`flex w-full items-center justify-center px-3 py-3 uppercase transition ${activeSection === item ? 'text-white' : ''}`}
+            >
+              {/* Show 'Experience' for 'work' section, otherwise capitalize first letter */}
+              {item === 'work' ? 'Experience' : item.charAt(0).toUpperCase() + item.slice(1)}
+              {activeSection === item && (
+                // Animated highlight background for active section
+                <motion.span
+                  layoutId="navbar-highlight"
+                  className="rounded-full absolute inset-x-0 top-1.5 bottom-1.5 -z-10 bg-blue-400"
+                  transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                />
+              )}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
   </nav>
 );
 
@@ -157,9 +159,12 @@ export default function Portfolio() {
       <Navbar activeSection={activeSection} />
 
       {/* Hero Section: Introduction and links */}
-      <section id="home" className="min-h-screen flex flex-col md:flex-row justify-end items-center px-20 pt-32 gap-20 max-w-[90rem] mx-auto text-left">
+      <section
+        id="home"
+        className="min-h-screen flex flex-col-reverse sm:flex-row items-center justify-between px-6 pt-32 gap-10 sm:gap-20 max-w-[90rem] mx-auto text-left"
+      >
         {/* Left Text Block */}
-        <div className="flex-1 max-w-2xl text-left">
+        <div className="flex-1 w-full sm:w-1/2 text-left space-y-4">
           <h1 className="text-5xl md:text-6xl font-bold mb-2">Hi, I&#39;m <span className="text-blue-400">Hemanth</span></h1>
           <p className="text-lg md:text-xl text-gray-300 mb-6">
             Software Engineering Student @ Iowa State University.
@@ -181,8 +186,8 @@ export default function Portfolio() {
         </div>
 
         {/* Right Image Block */}
-        <div className="flex-1 flex justify-center items-center">
-          <div className="w-[400px] h-[400px] rounded-full shadow-inner overflow-hidden">
+        <div className="flex-1 w-full sm:w-1/2 flex justify-center items-center">
+          <div className="w-48 h-48 sm:w-[400px] sm:h-[400px] rounded-full shadow-inner overflow-hidden">
             <Image
               src="/profile.jpg"
               alt="Hemanth's portrait"
@@ -195,8 +200,8 @@ export default function Portfolio() {
       </section>
 
       {/* About Section: Personal background and education/certifications */}
-      <section id="about" className="min-h-screen flex flex-col items-center justify-center py-20 px-6 w-full max-w-[1500px] mx-auto text-center">
-        <h2 className="text-4xl font-semibold mb-6">About Me</h2>
+      <section id="about" className="min-h-screen flex flex-col items-center justify-center py-16 px-4 sm:px-6 w-full max-w-[1500px] mx-auto text-center">
+        <h2 className="text-3xl sm:text-4xl font-semibold mb-6">About Me</h2>
         <p className="text-lg leading-8 text-gray-300 max-w-3xl text-left space-y-6">
           I&apos;m Hemanth, a Software Developer studying Software Engineering at Iowa State University. My specializations lie within AI/ML and Full Stack Development, with expertise in Java, Python, TypeScript, React, AI integrations like PyTorch, TensorFlow, and OpenAI, and cloud platforms such as AWS and Azure.
           <br /><br />
@@ -237,10 +242,10 @@ export default function Portfolio() {
       </section>
 
       {/* Projects Section: Portfolio of selected projects */}
-      <section id="projects" className="min-h-screen py-40 px-6 max-w-7xl mx-auto text-white">
-        <h2 className="text-4xl font-semibold mb-6 text-center">Projects</h2>
+      <section id="projects" className="min-h-screen py-24 px-4 sm:px-6 max-w-7xl mx-auto text-white">
+        <h2 className="text-3xl sm:text-4xl font-semibold mb-6 text-center">Projects</h2>
         <div className="flex justify-center mb-8 gap-3 flex-wrap">
-          {['All', 'Java', 'Python', 'React', 'Node.js'].map((filter, idx) => (
+          {['All', 'Java', 'Python', 'React'].map((filter, idx) => (
             <button
               key={idx}
               onClick={() => setSelectedFilter(filter)}
@@ -299,7 +304,7 @@ export default function Portfolio() {
             ? allProjects
             : allProjects.filter(project => project.tags.includes(selectedFilter));
           return (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
               {filteredProjects.map((project, idx) => (
                 <motion.div
                   key={idx}
@@ -339,7 +344,7 @@ export default function Portfolio() {
 
       {/* Experience Section: Work experience timeline with modal details */}
       <section id="work" className="pt-40 pb-20 px-6 bg-[#111] text-white max-w-6xl w-full mx-auto">
-        <h2 className="text-4xl font-semibold text-center mb-2">Work Experience</h2>
+        <h2 className="text-3xl sm:text-4xl font-semibold text-center mb-2">Work Experience</h2>
         <p className="text-center text-gray-400 mb-12">My professional journey in the world of web development</p>
         <div className="relative">
           <div className="absolute left-1/2 top-0 bottom-0 transform -translate-x-1/2 flex flex-col items-center">
@@ -357,7 +362,7 @@ export default function Portfolio() {
               org: 'Brains4Drones',
               period: 'Feb 2022 – Jun 2022',
               subtitle: 'Brains4Drones | Plano, TX',
-              image: 'brains4droneslogo.png',
+              image: '/brains4droneslogo.png',
               bullets: [
                 'Designed and built custom drone hardware for computer vision research.',
                 'Implemented OpenCV pipelines for real-time object detection.',
@@ -371,7 +376,7 @@ export default function Portfolio() {
               org: 'DC Partners Capital',
               period: 'Jul 2022 – Oct 2022',
               subtitle: 'DC Partners Capital | Houston, TX (Remote)',
-              image: 'dpclogo.jpeg',
+              image: '/dpclogo.jpeg',
               bullets: [
                 'Analyzed financial data and prepared investment reports.',
                 'Assisted in due diligence for real estate investments.',
@@ -397,17 +402,17 @@ export default function Portfolio() {
           ].map((job, idx) => (
             <div
               key={idx}
-              className="relative flex items-start mb-24"
+              className="relative flex flex-col sm:flex-row items-start mb-24"
             >
               {/* Timeline icon */}
-              <div className="absolute left-1/2 transform -translate-x-1/2">
+              <div className="absolute left-1/2 sm:transform -translate-x-1/2 sm:left-1/2 sm:-translate-x-1/2 top-0 sm:top-auto">
                 <div className="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center shadow-md z-10">
                   {job.icon}
                 </div>
               </div>
 
               {/* Card aligned at top with icon */}
-              <div className={`w-full flex mt-0 ${idx % 2 === 0 ? 'justify-start pr-20' : 'justify-end pl-20'}`}>
+              <div className={`w-full flex mt-16 sm:mt-0 ${idx % 2 === 0 ? 'justify-start pr-0 sm:pr-20' : 'justify-end pl-0 sm:pl-20'}`}>
                 <motion.div
                   whileHover={{ scale: 1.05, y: -10, boxShadow: "0 20px 30px rgba(0,0,0,0.3)" }}
                   transition={{ type: "spring", stiffness: 300, damping: 20 }}
@@ -505,9 +510,9 @@ export default function Portfolio() {
       {/* Leadership Section: Student organizations and roles with modal details */}
       <LayoutGroup>
         <section id="leadership" className="py-40 px-6 flex flex-col items-center justify-center bg-[#111] text-white">
-          <h2 className="text-4xl font-semibold mb-12 text-center">Leadership</h2>
+          <h2 className="text-3xl sm:text-4xl font-semibold mb-12 text-center">Leadership</h2>
           {/* Leadership Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 w-full max-w-7xl mx-auto">
+          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-8 w-full max-w-7xl mx-auto">
             {[
               {
                 title: 'Residence Hall Senator',
@@ -560,12 +565,12 @@ export default function Portfolio() {
             ].map((act, idx) => (
               <motion.div
                 key={idx}
-                className="relative p-4 flex flex-col bg-[#1e1e1e] rounded-xl cursor-pointer overflow-hidden"
+                className="relative p-4 flex flex-col bg-[#1e1e1e] rounded-xl cursor-pointer overflow-hidden h-auto sm:h-auto md:h-[420px] lg:h-[auto]"
                 onClick={() => setSelectedActivity({ ...act, index: idx })}
                 whileHover={{ scale: 1.05, y: -10, boxShadow: "0 20px 30px rgba(0,0,0,0.3)" }}
                 transition={{ type: "spring", stiffness: 300, damping: 20 }}
               >
-                <div className="h-60 w-full rounded-lg mb-4 overflow-hidden relative">
+                <div className="h-40 sm:h-60 w-full rounded-lg mb-4 overflow-hidden relative">
                   <Image
                     src={act.image}
                     alt={act.title}
@@ -650,13 +655,13 @@ export default function Portfolio() {
       </LayoutGroup>
 
       {/* Skills Section: Technical skills grouped by category */}
-      <section id="skills" className="py-32 px-4 max-w-7xl mx-auto text-center text-white">
-        <h2 className="text-4xl font-semibold mb-4">My Skills</h2>
+      <section id="skills" className="py-24 px-4 sm:px-6 max-w-7xl mx-auto text-center text-white">
+        <h2 className="text-3xl sm:text-4xl font-semibold mb-4">My Skills</h2>
         <p className="text-gray-400 mb-12"></p>
         {/* Skills Cards */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Frontend */}
-          <div className="bg-[#1e1e1e] rounded-xl p-6 shadow-md text-left">
+          <div className="w-full max-w-xs mx-auto bg-[#1e1e1e] rounded-xl p-6 shadow-md text-left">
             <Image
               src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg"
               alt="Frontend"
@@ -677,7 +682,7 @@ export default function Portfolio() {
           </div>
 
           {/* Backend */}
-          <div className="bg-[#1e1e1e] rounded-xl p-6 shadow-md text-left">
+          <div className="w-full max-w-xs mx-auto bg-[#1e1e1e] rounded-xl p-6 shadow-md text-left">
             <Image
               src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg"
               alt="Backend"
@@ -698,7 +703,7 @@ export default function Portfolio() {
           </div>
 
           {/* Database */}
-          <div className="bg-[#1e1e1e] rounded-xl p-6 shadow-md text-left">
+          <div className="w-full max-w-xs mx-auto bg-[#1e1e1e] rounded-xl p-6 shadow-md text-left">
             <Image
               src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg"
               alt="Database"
@@ -716,7 +721,7 @@ export default function Portfolio() {
           </div>
 
           {/* Tools */}
-          <div className="bg-[#1e1e1e] rounded-xl p-6 shadow-md text-left">
+          <div className="w-full max-w-xs mx-auto bg-[#1e1e1e] rounded-xl p-6 shadow-md text-left">
             <Image
               src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg"
               alt="Tools"
@@ -741,7 +746,7 @@ export default function Portfolio() {
 
       {/* Contact Section: Email and contact form */}
       <section id="contact" className="py-32 px-4 max-w-xl mx-auto text-center">
-        <h2 className="text-3xl md:text-4xl font-bold mb-6">SEND ME A MESSAGE!</h2>
+        <h2 className="text-3xl sm:text-4xl font-bold mb-6">SEND ME A MESSAGE!</h2>
         <p className="text-gray-400 mb-8">
           Please contact me directly at <a href="mailto:hpeddasani7@gmail.com" className="text-blue-400 underline">hpeddasani7@gmail.com</a> or through this form.
         </p>
