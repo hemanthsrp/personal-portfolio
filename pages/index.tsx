@@ -8,6 +8,8 @@
  */
 
 import React, { useEffect, useState } from "react";
+import { useState as useContactState } from 'react';
+
 import Image from "next/image";
 import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
 import { FaGithub, FaLinkedin, FaGraduationCap, FaCertificate, FaBriefcase } from "react-icons/fa";
@@ -152,14 +154,13 @@ export default function Portfolio() {
 
   return (
     <div className="bg-[#111] text-white font-sans scroll-smooth text-center">
-
-      {/* ===========================
-          Navbar
-      ============================ */}
+      {/* =========================== */}
+      {/* Navbar */}
+      {/* =========================== */}
       <Navbar activeSection={activeSection} />
 
-      {/* Hero Section: Introduction and links */}
-      <section
+=      {/* Hero Section: Introduction and links */}
+=      <section
         id="home"
         className="min-h-screen flex flex-col-reverse sm:flex-row items-center justify-between px-6 pt-32 gap-10 sm:gap-20 max-w-[90rem] mx-auto text-left"
       >
@@ -184,7 +185,6 @@ export default function Portfolio() {
             </a>
           </div>
         </div>
-
         {/* Right Image Block */}
         <div className="flex-1 w-full sm:w-1/2 flex justify-center items-center">
           <div className="w-48 h-48 sm:w-[400px] sm:h-[400px] rounded-full shadow-inner overflow-hidden">
@@ -199,8 +199,8 @@ export default function Portfolio() {
         </div>
       </section>
 
-      {/* About Section: Personal background and education/certifications */}
-      <section id="about" className="min-h-screen flex flex-col items-center justify-center py-16 px-4 sm:px-6 w-full max-w-[1500px] mx-auto text-center">
+=      {/* About Section: Personal background and education/certifications */}
+=      <section id="about" className="min-h-screen flex flex-col items-center justify-center py-16 px-4 sm:px-6 w-full max-w-[1500px] mx-auto text-center">
         <h2 className="text-3xl sm:text-4xl font-semibold mb-6">About Me</h2>
         <p className="text-lg leading-8 text-gray-300 max-w-3xl text-left space-y-6">
           I&apos;m Hemanth, a Software Developer studying Software Engineering at Iowa State University. My specializations lie within AI/ML and Full Stack Development, with expertise in Java, Python, TypeScript, React, AI integrations like PyTorch, TensorFlow, and OpenAI, and cloud platforms such as AWS and Azure.
@@ -507,8 +507,8 @@ export default function Portfolio() {
         </div>
       </section>
 
-      {/* Leadership Section: Student organizations and roles with modal details */}
-      <LayoutGroup>
+=      {/* Leadership Section: Student organizations and roles with modal details */}
+=      <LayoutGroup>
         <section id="leadership" className="py-40 px-6 flex flex-col items-center justify-center bg-[#111] text-white">
           <h2 className="text-3xl sm:text-4xl font-semibold mb-12 text-center">Leadership</h2>
           {/* Leadership Cards */}
@@ -745,35 +745,72 @@ export default function Portfolio() {
       </section>
 
       {/* Contact Section: Email and contact form */}
-      <section id="contact" className="py-32 px-4 max-w-xl mx-auto text-center">
-        <h2 className="text-3xl sm:text-4xl font-bold mb-6">SEND ME A MESSAGE!</h2>
-        <p className="text-gray-400 mb-8">
+      <ContactSection />
+      <footer className="text-xs text-gray-500 mt-10 text-center">
+        &copy; 2024 Hemanth. All rights reserved.<br />
+        <span className="text-gray-600 italic">I know it is sad to reach the end of something so awesome :)</span>
+      </footer>
+    </div>
+  );
+}
+
+// ContactSection: Tailwind CSS styled contact form, integrates with /api/contact
+function ContactSection() {
+  const [email, setEmail] = useContactState('');
+  const [message, setMessage] = useContactState('');
+  const [status, setStatus] = useContactState('');
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus('Sending...');
+
+    const res = await fetch('/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, message }),
+    });
+
+    const result = await res.json();
+    setStatus(result.message);
+    setEmail('');
+    setMessage('');
+  };
+
+  return (
+    <section id="contact" className="py-16 px-4 bg-[#111] text-white">
+      <div className="max-w-2xl mx-auto">
+        <h2 className="text-4xl font-bold mb-4 text-center">SEND ME A MESSAGE!</h2>
+        <p className="text-center text-gray-400 mb-8">
           Please contact me directly at <a href="mailto:hpeddasani7@gmail.com" className="text-blue-400 underline">hpeddasani7@gmail.com</a> or through this form.
         </p>
-        <form className="space-y-4">
+        <form
+          onSubmit={handleSubmit}
+          className="mt-8 max-w-md mx-auto space-y-6 bg-[#1a1a1a] p-6 rounded-2xl"
+        >
           <input
             type="email"
-            placeholder="Your email"
-            className="w-full px-4 py-3 rounded-md bg-[#1e1e1e] text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
+            required
+            placeholder="Your Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="w-full bg-[#1a1a1a] border border-gray-600 rounded-xl p-4 placeholder-gray-500 focus:outline-none focus:border-blue-400"
           />
           <textarea
-            rows={5}
-            placeholder="Your message"
-            className="w-full px-4 py-3 rounded-md bg-[#1e1e1e] text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400 transition resize-none"
+            required
+            placeholder="Your Message"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            className="w-full bg-[#1a1a1a] border border-gray-600 rounded-xl p-4 placeholder-gray-500 focus:outline-none focus:border-blue-400 h-32 resize-none"
           />
           <button
             type="submit"
-            className="px-6 py-2 bg-white text-black font-medium rounded-full hover:bg-gray-200 transition"
+            className="mt-6 w-full py-3 bg-white text-black font-semibold rounded-full hover:bg-gray-200 transition"
           >
-            Submit
+            Send Message
           </button>
         </form>
-        <footer className="text-xs text-gray-500 mt-10">
-          &copy; 2024 Hemanth. All rights reserved.<br />
-          <span className="text-gray-600 italic">I know it is sad to reach the end of something so awesome :)</span>
-        </footer>
-      </section>
-
-    </div>
+        {status && <p className="text-center mt-4 text-gray-300">{status}</p>}
+      </div>
+    </section>
   );
 }
