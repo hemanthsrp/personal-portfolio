@@ -749,7 +749,7 @@ export default function Portfolio() {
       {/* Contact Section: Email and contact form */}
       <ContactSection />
       <footer className="text-xs text-gray-500 mt-10 text-center">
-        &copy; 2024 Hemanth. All rights reserved.<br />
+        &copy; 2025 Hemanthsai Reddy Peddasani. All rights reserved.<br />
         <span className="text-gray-600 italic">I know it is sad to reach the end of something so awesome :)</span>
       </footer>
       {/* Spacer under footer */}
