@@ -750,12 +750,12 @@ export default function Portfolio() {
             <div className="flex flex-wrap gap-2">
               <SkillBadge name="Git" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" />
               <SkillBadge name="GitHub" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" />
-              <SkillBadge name="Claude Code" src="/claude-color.svg" />
-              <SkillBadge name="GitHub Copilot" src="/githubcopilot.svg" />
-              <SkillBadge name="Postman" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postman/postman-original.svg" />
+              <SkillBadge name="Claude" src="/claude-color.svg" />
               <SkillBadge name="AWS" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" />
-              <SkillBadge name="Docker" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" />
+              <SkillBadge name="Postman" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postman/postman-original.svg" />
               <SkillBadge name="Linux" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" />
+              <SkillBadge name="Docker" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" />
+               <SkillBadge name="Copilot" src="/githubcopilot.svg" />
 
             </div>
           </div>
