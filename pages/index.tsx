@@ -180,7 +180,7 @@ export default function Portfolio() {
             <a href="#contact" className="flex items-center gap-2 px-6 py-2 bg-black text-white rounded-full hover:bg-gray-800 transition">
               Contact me here <HiOutlineMail />
             </a>
-            <a href="https://drive.google.com/file/d/1MnKpTcwW2d89AC7IbM5FxmHBSKU4bGZU/view?usp=sharing" target="_blank" className="flex items-center gap-2 px-6 py-2 bg-white text-black rounded-full hover:bg-gray-200 transition">
+            <a href="https://drive.google.com/file/d/1nqRKApXwv6x8SPKlJkmd8OC76KnyqVWa/view?usp=sharing" target="_blank" className="flex items-center gap-2 px-6 py-2 bg-white text-black rounded-full hover:bg-gray-200 transition">
               See Resume <BsLink45Deg />
             </a>
             <a href="https://linkedin.com/in/hemanthsrp" target="_blank" className="flex items-center gap-2 px-4 py-2 bg-white text-black rounded-full hover:bg-gray-200 transition">
