@@ -1,10 +1,9 @@
 /**
  * Portfolio Home Page (index.tsx)
  *
- * This file defines the main landing page of the personal portfolio website.
- * It features a hero section, about, projects, work experience, leadership, skills,
- * and contact sections, with smooth navigation and interactive modals for experience and leadership details.
- * The page leverages reusable UI components and Framer Motion for animations.
+ * Main landing page for the personal portfolio website.
+ * Features hero, about, projects, work experience, leadership, skills, and contact sections.
+ * Uses Framer Motion for animations and Tailwind CSS for styling.
  */
 
 import React, { useEffect, useState } from "react";
@@ -57,8 +56,14 @@ const SkillBadge = ({ name, src }: { name: string; src: string }) => (
   </motion.div>
 );
 
-// Navbar: Fixed navigation bar for section links and highlighting.
-// Dynamically renders navigation items and highlights the active section.
+// ===========================
+// Navbar Component
+// ===========================
+
+/**
+ * Navbar: Fixed navigation bar for section links and highlighting.
+ * Dynamically renders navigation items and highlights the active section.
+ */
 const Navbar = ({ activeSection }: { activeSection: string }) => (
   <nav className="fixed top-[0.15rem] left-1/2 -translate-x-1/2 py-0.6 px-6 sm:top-[1.7rem] sm:[initial] z-50 rounded-full bg-white/10 shadow-lg backdrop-blur-md border border-white/20">
     <div className="sm:block overflow-x-auto whitespace-nowrap snap-x snap-mandatory">
@@ -116,16 +121,15 @@ export default function Portfolio() {
   // ===========================
   // Section Intersection Observer
   // ===========================
-  // Sets the active section in the navbar as the user scrolls.
-  // Uses IntersectionObserver to detect which section is in view.
+  // Sets the active section in the navbar as the user scrolls using IntersectionObserver.
   useEffect(() => {
     const sections = document.querySelectorAll("section[id]");
     const observer = new window.IntersectionObserver(
       (entries) => {
-        // Filter all visible (intersecting) entries
+        // Find all visible (intersecting) entries
         const visibleEntries = entries.filter(entry => entry.isIntersecting);
         if (visibleEntries.length > 0) {
-          // Sort by boundingClientRect.top (closest to top of viewport first)
+          // Pick the section closest to the top of the viewport
           const sorted = visibleEntries.sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
           setActiveSection(sorted[0].target.id);
         }
@@ -159,7 +163,9 @@ export default function Portfolio() {
       {/* =========================== */}
       <Navbar activeSection={activeSection} />
 
-      {/* Hero Section: Introduction and links */}
+      {/* =========================== */}
+      {/* Hero Section */}
+      {/* =========================== */}
       <section
         id="home"
         className="min-h-screen flex flex-col-reverse sm:flex-row items-center justify-between px-6 pt-32 gap-10 sm:gap-20 max-w-[90rem] mx-auto text-left"
@@ -199,9 +205,9 @@ export default function Portfolio() {
         </div>
       </section>
 
+      {/* =========================== */}
       {/* About Section */}
-      {/* About Section: Personal background and education/certifications */}
-      {/* About Section */}
+      {/* =========================== */}
       <section id="about" className="min-h-screen flex flex-col items-center justify-center py-16 px-4 sm:px-6 w-full max-w-[1500px] mx-auto text-center">
         <h2 className="text-3xl sm:text-4xl font-semibold mb-6">About Me</h2>
         <p className="text-lg leading-8 text-gray-300 max-w-3xl text-left space-y-6">
@@ -243,7 +249,9 @@ export default function Portfolio() {
         </div>
       </section>
 
-      {/* Projects Section: Portfolio of selected projects */}
+      {/* =========================== */}
+      {/* Projects Section */}
+      {/* =========================== */}
       <section id="projects" className="min-h-screen py-24 px-4 sm:px-6 max-w-7xl mx-auto text-white">
         <h2 className="text-3xl sm:text-4xl font-semibold mb-6 text-center">Projects</h2>
         <div className="flex justify-center mb-8 gap-3 flex-wrap">
@@ -344,7 +352,9 @@ export default function Portfolio() {
         })()}
       </section>
 
-      {/* Experience Section: Work experience timeline with modal details */}
+      {/* =========================== */}
+      {/* Experience Section */}
+      {/* =========================== */}
       <section id="work" className="pt-40 pb-20 px-6 bg-[#111] text-white max-w-6xl w-full mx-auto">
         <h2 className="text-3xl sm:text-4xl font-semibold text-center mb-2">Work Experience</h2>
         <p className="text-center text-gray-400 mb-12">My professional journey in the world of web development</p>
@@ -509,7 +519,9 @@ export default function Portfolio() {
         </div>
       </section>
 
-      {/* Leadership Section: Student organizations and roles with modal details */}
+      {/* =========================== */}
+      {/* Leadership Section */}
+      {/* =========================== */}
       <LayoutGroup>
         <section id="leadership" className="py-40 px-6 flex flex-col items-center justify-center bg-[#111] text-white">
           <h2 className="text-3xl sm:text-4xl font-semibold mb-12 text-center">Leadership</h2>
@@ -656,7 +668,9 @@ export default function Portfolio() {
         </AnimatePresence>
       </LayoutGroup>
 
-      {/* Skills Section: Technical skills grouped by category */}
+      {/* =========================== */}
+      {/* Skills Section */}
+      {/* =========================== */}
       <section id="skills" className="py-24 px-4 sm:px-6 max-w-7xl mx-auto text-center text-white">
         <h2 className="text-3xl sm:text-4xl font-semibold mb-4">My Skills</h2>
         <p className="text-gray-400 mb-12"></p>
@@ -746,8 +760,14 @@ export default function Portfolio() {
         </div>
       </section>
 
-      {/* Contact Section: Email and contact form */}
+      {/* =========================== */}
+      {/* Contact Section */}
+      {/* =========================== */}
       <ContactSection />
+
+      {/* =========================== */}
+      {/* Footer */}
+      {/* =========================== */}
       <footer className="text-xs text-gray-500 mt-10 text-center">
         &copy; 2025 Hemanthsai Reddy Peddasani. All rights reserved.<br />
         <span className="text-gray-600 italic">I know it is sad to reach the end of something so awesome :)</span>
@@ -758,12 +778,20 @@ export default function Portfolio() {
   );
 }
 
-// ContactSection: Tailwind CSS styled contact form, integrates with /api/contact
+// ===========================
+// Contact Section Component
+// ===========================
+
+/**
+ * ContactSection: Tailwind CSS styled contact form, integrates with /api/contact
+ */
 function ContactSection() {
+  // State for email, message, and status
   const [email, setEmail] = useContactState('');
   const [message, setMessage] = useContactState('');
   const [status, setStatus] = useContactState('');
 
+  // Handles form submission and sends data to /api/contact
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus('Sending...');
@@ -814,6 +842,7 @@ function ContactSection() {
             Send Message
           </button>
         </form>
+        {/* Show status message after form submission */}
         {status && <p className="text-center mt-4 text-gray-300">{status}</p>}
       </div>
     </section>
