@@ -798,16 +798,24 @@ function ContactSection() {
     e.preventDefault();
     setStatus('Sending...');
 
-    const res = await fetch('/api/contact', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, message }),
-    });
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, message }),
+      });
 
-    const result = await res.json();
-    setStatus(result.message);
-    setEmail('');
-    setMessage('');
+      const result = await res.json();
+      setStatus(result.message ?? 'Unexpected response from server.');
+
+      if (res.ok) {
+        setEmail('');
+        setMessage('');
+      }
+    } catch (error) {
+      console.error('Failed to submit contact form:', error);
+      setStatus('Failed to send message. Please try again.');
+    }
   };
 
   return (

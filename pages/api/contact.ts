@@ -5,47 +5,42 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 // Email sending utility
 import nodemailer from 'nodemailer';
 
-// Environment variables
-const EMAIL_USER = process.env.EMAIL_USER;
-const EMAIL_PASS = process.env.EMAIL_PASS;
-const EMAIL_TO = process.env.EMAIL_TO;
-
-if (!EMAIL_USER) {
-  // Throw error if EMAIL_USER is missing
-  throw new Error('Missing environment variable: EMAIL_USER');
-}
-if (!EMAIL_PASS) {
-  // Throw error if EMAIL_PASS is missing
-  throw new Error('Missing environment variable: EMAIL_PASS');
-}
-if (!EMAIL_TO) {
-  // Throw error if EMAIL_TO is missing
-  throw new Error('Missing environment variable: EMAIL_TO');
-}
-
-// Create transporter
-// Configure nodemailer transporter for sending emails
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: EMAIL_USER,
-    pass: EMAIL_PASS,
-  },
-});
-
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   // Only allow POST requests
   if (req.method !== 'POST') {
     return res.status(405).json({ message: 'Method not allowed' });
   }
 
+  const EMAIL_USER = process.env.EMAIL_USER;
+  const EMAIL_PASS = process.env.EMAIL_PASS;
+  const EMAIL_TO = process.env.EMAIL_TO;
+
+  if (!EMAIL_USER || !EMAIL_PASS || !EMAIL_TO) {
+    console.error('Contact form is missing required environment variables.');
+    return res.status(500).json({ message: 'Server configuration error.' });
+  }
+
   // Parse request body
   const { email, message } = req.body;
+
+  if (typeof email !== 'string' || typeof message !== 'string' || !email.trim() || !message.trim()) {
+    return res.status(400).json({ message: 'Please provide a valid email and message.' });
+  }
+
+  // Configure transporter only after env vars are validated.
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: EMAIL_USER,
+      pass: EMAIL_PASS,
+    },
+  });
 
   try {
     // Send email
     await transporter.sendMail({
-      from: email,
+      from: EMAIL_USER,
+      replyTo: email,
       to: EMAIL_TO,
       subject: `Message from ${email}`,
       text: message,
